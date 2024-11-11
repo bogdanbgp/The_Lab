@@ -7,8 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class LoginWindow extends JFrame implements ActionListener {
-    JFrame frame = new JFrame(); // No arguments here
-
+    JFrame frame = new JFrame();
     ImageIcon logo = new ImageIcon("logo.png");
 
     JButton loginButton = new JButton("Login");
@@ -25,12 +24,14 @@ public class LoginWindow extends JFrame implements ActionListener {
     JTextField usernameField = new JTextField();
     JPasswordField passField = new JPasswordField();
 
-    // new variable to store login info
-    HashMap<String, String> loginInfo = new HashMap<>();
+    // Declare the idsAndPasswords instance here so it can be used in the class
+    private IDsAndPasswords idsAndPasswords;
 
-    // constructor
-    LoginWindow(HashMap<String, String> loginData) {
-        this.loginInfo = loginData;
+    // Constructor
+    LoginWindow(IDsAndPasswords idsAndPasswords) {
+        this.idsAndPasswords = idsAndPasswords;  // Store the passed instance
+
+        HashMap<String, String> loginInfo = idsAndPasswords.getLoginInfo();  // Use the shared login data
 
         frame.setLayout(null);
 
@@ -87,17 +88,18 @@ public class LoginWindow extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        HashMap<String, String> loginInfo = idsAndPasswords.getLoginInfo();
+
         if (e.getSource() == loginButton) {
-            String enteredUsername = usernameField.getText(); //get username from text field
-            String enteredPassword = new String(passField.getPassword()); //get pass from text field
+            String enteredUsername = usernameField.getText();
+            String enteredPassword = new String(passField.getPassword());
 
             validCredsLabel.setVisible(false);
             invalidCredsLabel.setVisible(false);
 
-            // Login validation logic
             if (loginInfo.containsKey(enteredUsername) && loginInfo.get(enteredUsername).equals(enteredPassword)) {
                 validCredsLabel.setVisible(true);
-                //frame.dispose(); // close login window
+                // Login is successful, proceed to the main app
                 new TheLab(); // open TheLab window
             } else {
                 invalidCredsLabel.setVisible(true);
@@ -107,13 +109,13 @@ public class LoginWindow extends JFrame implements ActionListener {
         if (e.getSource() == resetButton) {
             usernameField.setText("");
             passField.setText("");
-            new ResetWindow(); // Open the reset password window
+            new ResetWindow(idsAndPasswords); // Pass idsAndPasswords to ResetWindow
         }
 
         if (e.getSource() == registerButton) {
             usernameField.setText("");
             passField.setText("");
-            new RegisterWindow(); // Open the registration window
+            new RegisterWindow(idsAndPasswords); // Pass idsAndPasswords to RegisterWindow
         }
     }
 }

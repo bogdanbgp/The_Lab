@@ -17,16 +17,19 @@ public class RegisterWindow implements ActionListener {
     JLabel passLabel = new JLabel("Password:");
     JButton registerButton = new JButton("Register");
     JLabel validCredsLabel = new JLabel("Registration complete!");
-    JLabel invalidCredsLabel = new JLabel("Please try again!");
+    JLabel invalidCredsLabel = new JLabel("Invalid input. Please try again.");
     JTextField usernameField = new JTextField();
     JTextField emailField = new JTextField();
     JPasswordField passField = new JPasswordField();
 
-    RegisterWindow() {
+    IDsAndPasswords idsAndPasswords;  // Reference to IDsAndPasswords class
+
+    RegisterWindow(IDsAndPasswords idsAndPasswords) {
+        this.idsAndPasswords = idsAndPasswords;  // Assign the shared instance
         regWindow.setLayout(null); // absolute positioning
 
         logoLabel.setIcon(logo);
-        logoLabel.setBounds(120, 10, 150, 150);
+        logoLabel.setBounds(160, 10, 150, 150);
         regWindow.add(logoLabel);
 
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -48,25 +51,25 @@ public class RegisterWindow implements ActionListener {
         passField.setBounds(130, 280, 200, 30);
         regWindow.add(passField);
 
-        registerButton.setBounds(150, 320, 150, 40);
+        registerButton.setBounds(130, 320, 150, 40);
         registerButton.addActionListener(this);
         regWindow.add(registerButton);
 
-        validCredsLabel.setBounds(160, 370, 300, 30);
+        validCredsLabel.setBounds(130, 370, 200, 30);
         validCredsLabel.setForeground(Color.GREEN);
         validCredsLabel.setVisible(false);
         regWindow.add(validCredsLabel);
 
-        invalidCredsLabel.setBounds(174, 370, 300, 30);
+        invalidCredsLabel.setBounds(120, 370, 200, 30);
         invalidCredsLabel.setForeground(Color.RED);
         invalidCredsLabel.setVisible(false);
         regWindow.add(invalidCredsLabel);
 
         regWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         regWindow.setTitle("The Lab");
-        regWindow.setSize(400, 500); // Set the desired size
+        regWindow.setSize(400, 500);
         regWindow.getContentPane().setBackground(Color.LIGHT_GRAY);
-        regWindow.setLocationRelativeTo(null); // Center the window
+        regWindow.setLocationRelativeTo(null); // center window
         regWindow.setVisible(true);
     }
 
@@ -75,17 +78,17 @@ public class RegisterWindow implements ActionListener {
         String userValue = usernameField.getText();
         String emailValue = emailField.getText();
 
-        if (!userValue.contains("+") && !userValue.contains("[") &&
-                !userValue.contains("|") && !userValue.contains("]") &&
-                !userValue.contains("\\") && !userValue.contains("{") &&
-                !userValue.contains(":") && !userValue.contains("}") &&
-                !userValue.contains("<") && !userValue.contains("?") &&
-                !userValue.contains(">") && !userValue.contains("/") &&
-                !userValue.contains("'") && !userValue.contains("\"") &&
-                !userValue.contains(",") && !userValue.contains(";") &&
-                emailValue.contains("@") && (emailValue.contains(".com") ||
-                emailValue.contains(".ro") || emailValue.contains(".org") ||
-                emailValue.contains(".co.uk") || emailValue.contains(".net"))) {
+        // Email validation
+        boolean isValidEmail = emailValue.contains("@") && emailValue.indexOf('.') > emailValue.indexOf('@');
+
+        // Username validation
+        boolean isValidUsername = userValue.matches("[a-zA-Z0-9]+");
+
+        // If email and username are valid
+        if (isValidEmail && isValidUsername) {
+            // Add user to login info
+            idsAndPasswords.addUser(userValue, new String(passField.getPassword()), emailValue);
+
             invalidCredsLabel.setVisible(false);
             validCredsLabel.setVisible(true);
         } else {
