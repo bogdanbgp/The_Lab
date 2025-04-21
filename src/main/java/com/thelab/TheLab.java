@@ -40,7 +40,7 @@ public class TheLab extends JFrame {
         add(bottleDisplay, BorderLayout.CENTER);
         setSize(360, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null); // window on center
+        setLocationRelativeTo(null); // nota bene ----> for window on center
         setVisible(true);
     }
 }

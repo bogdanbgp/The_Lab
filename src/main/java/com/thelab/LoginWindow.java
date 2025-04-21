@@ -24,14 +24,14 @@ public class LoginWindow extends JFrame implements ActionListener {
     JTextField usernameField = new JTextField();
     JPasswordField passField = new JPasswordField();
 
-    // Declare the idsAndPasswords instance here so it can be used in the class
+    //  idsAndPasswords instance
     private IDsAndPasswords idsAndPasswords;
 
-    // Constructor
+    // constructor
     LoginWindow(IDsAndPasswords idsAndPasswords) {
         this.idsAndPasswords = idsAndPasswords;  // Store the passed instance
 
-        HashMap<String, String> loginInfo = idsAndPasswords.getLoginInfo();  // Use the shared login data
+        HashMap<String, String> loginInfo = idsAndPasswords.getLoginInfo();  // login data get
 
         frame.setLayout(null);
 
@@ -99,7 +99,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 
             if (loginInfo.containsKey(enteredUsername) && loginInfo.get(enteredUsername).equals(enteredPassword)) {
                 validCredsLabel.setVisible(true);
-                // Login is successful, proceed to the main app
+                // if login is successful, proceed to the main app
                 new TheLab(); // open TheLab window
             } else {
                 invalidCredsLabel.setVisible(true);

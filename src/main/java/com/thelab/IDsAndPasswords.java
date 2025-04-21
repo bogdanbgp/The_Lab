@@ -11,7 +11,7 @@ public class IDsAndPasswords {
 
     // Constructor initializes with some test data
     public IDsAndPasswords() {
-        // sample data for login
+        // sample data for login .........
         loginInfo.put("user1", "pass1");
         loginInfo.put("user2", "pass2");
         loginInfo.put("user3", "pass3");
@@ -28,12 +28,12 @@ public class IDsAndPasswords {
         emailInfo.put(username, email);
     }
 
-    // Get the login info (username and password)
+    // get login info (username and password)
     public HashMap<String, String> getLoginInfo() {
         return loginInfo;
     }
 
-    // Get the email info (username and email)
+    // get email info (username and email)
     public HashMap<String, String> getEmailInfo() {
         return emailInfo;
     }

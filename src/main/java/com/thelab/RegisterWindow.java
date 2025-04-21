@@ -78,10 +78,10 @@ public class RegisterWindow implements ActionListener {
         String userValue = usernameField.getText();
         String emailValue = emailField.getText();
 
-        // Email validation
+        // email validation
         boolean isValidEmail = emailValue.contains("@") && emailValue.indexOf('.') > emailValue.indexOf('@');
 
-        // Username validation
+        // username validation
         boolean isValidUsername = userValue.matches("[a-zA-Z0-9]+");
 
         // If email and username are valid
